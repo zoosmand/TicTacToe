@@ -1,6 +1,20 @@
+stages:
+  - build
+  - run
+
 image: node:latest
 
-test:
+install:
+  stage: build
+  tags:
+    - mp2_docker_2
   script:
     - yarn install
+
+test run:
+  stage: run
+  tags:
+    - mp2_docker_2
+  script:
     - yarn start
+    
