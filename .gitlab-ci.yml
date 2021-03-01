@@ -7,14 +7,13 @@ image: node:latest
 install:
   stage: build
   tags:
-    - mp2_docker_2
+    - task-03-docker
   script:
     - yarn install
 
 test run:
   stage: run
   tags:
-    - mp2_docker_2
+    - task-03-docker
   script:
     - yarn start
-    
