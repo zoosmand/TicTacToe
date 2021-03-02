@@ -37,6 +37,6 @@ internal test:
     - task-03-docker
   when: on_success
   variables:
-    CI: true
+    CI: "true"
   script:
     - yarn test
