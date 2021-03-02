@@ -1,28 +1,33 @@
 stages:
   - build
-  - deps
   - test
+  - stage
+  - deploy
 
 image: node:latest
 
-build:
+arrange:
   stage: build
   tags:
     - task-03-docker
   script:
     - yarn install
-
-deps:
-  stage: deps
-  tags:
-    - task-03-docker
-  when: on_success
-  script:
-    - echo "-------------Install dependencies------------"
+    - echo "---------------------------------------------"
+    - echo "---          Install dependencies         ---"
+    - echo "---------------------------------------------"
     - yarn add eslint --dev
     - yarn add eslint-plugin-react --dev
+  artifacts:
+    paths:
+      - node_modules
+  cache:
+    key:
+      files:
+        - yarn.lock
+    paths:
+      - node_modules
 
-lint test:
+linter_test:
   stage: test
   tags:
     - task-03-docker
@@ -31,7 +36,7 @@ lint test:
     - echo "----------------Run ES Lint------------------"
     - yarn run eslint ./src/*.js
 
-yarn test:
+yarn_test:
   stage: test
   tags:
     - task-03-docker
@@ -39,4 +44,25 @@ yarn test:
   variables:
     CI: "true"
   script:
+    - export
     - yarn test
+
+staging:
+  stage: stage
+  tags:
+    - task-03-docker
+  when: on_success
+  script:
+    - echo "---------------------------------------------"
+    - echo "---                Staging                ---"
+    - echo "---------------------------------------------"
+
+deploing:
+  stage: deploy
+  tags:
+    - task-03-docker
+  when: manual
+  script:
+    - echo "---------------------------------------------"
+    - echo "---               Deploying               ---"
+    - echo "---------------------------------------------"
