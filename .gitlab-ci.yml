@@ -1,16 +1,8 @@
 stages:
-  - pretest
   - build
   - test
 
 image: node:latest
-
-lint test:
-  stage: pretest
-  tags:
-    - task-03-docker
-  script:
-    - echo "Running linter_test.sh"
 
 build:
   stage: build
@@ -18,6 +10,15 @@ build:
     - task-03-docker
   script:
     - yarn install
+
+lint test:
+  stage: test
+  tags:
+    - task-03-docker
+  script:
+    - echo "Running linter_test.sh"
+    - yarn add eslint --dev
+    - yarn add eslint-plugin-react --dev
 
 internal test:
   stage: test
