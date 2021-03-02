@@ -1,5 +1,6 @@
 stages:
   - build
+  - deps
   - test
 
 image: node:latest
@@ -12,19 +13,30 @@ build:
     - yarn install
 
 lint test:
+  stage: deps
+  tags:
+    - task-03-docker
+  when: on_success
+  script:
+    - echo "-------------Install dependencies------------"
+    - yarn add eslint --dev
+    - yarn add eslint-plugin-react --dev
+
+lint test:
   stage: test
   tags:
     - task-03-docker
+  when: on_success
   script:
-    - echo "Running linter_test.sh"
-    - yarn add eslint --dev
-    - yarn add eslint-plugin-react --dev
+    - echo "----------------Run ES Lint------------------"
+    - yarn run eslint ./src/*.js
 
 internal test:
   stage: test
   tags:
     - task-03-docker
-  before_script:
+  when: on_success
+  variables:
     - CI=true
   script:
     - yarn test
