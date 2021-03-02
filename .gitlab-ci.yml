@@ -1,19 +1,29 @@
 stages:
+  - pretest
   - build
-  - run
+  - test
 
 image: node:latest
 
-install:
+lint test:
+  stage: pretest
+  tags:
+    - task-03-docker
+  script:
+    - echo "Running linter_test.sh"
+
+build:
   stage: build
   tags:
     - task-03-docker
   script:
     - yarn install
 
-test run:
-  stage: run
+internal test:
+  stage: test
   tags:
     - task-03-docker
+  before_script:
+    - CI=true
   script:
-    - yarn start
+    - yarn test
