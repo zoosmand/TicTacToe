@@ -12,7 +12,7 @@ build:
   script:
     - yarn install
 
-lint test:
+deps:
   stage: deps
   tags:
     - task-03-docker
@@ -31,7 +31,7 @@ lint test:
     - echo "----------------Run ES Lint------------------"
     - yarn run eslint ./src/*.js
 
-internal test:
+yarn test:
   stage: test
   tags:
     - task-03-docker
