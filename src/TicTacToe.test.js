@@ -1,5 +1,5 @@
-import { render } from '@testing-library/react';
-import TicTacToe from './TicTacToe';
+import { render } from "@testing-library/react";
+import TicTacToe from "./TicTacToe";
 
 describe("<TicTacToe />", () => {
   it("Renders title", () => {

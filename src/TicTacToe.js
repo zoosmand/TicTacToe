@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 // import ReactDOM from 'react-dom';
-import './index.css';
+import "./index.css";
 
 function Square(props) {
   return (
@@ -12,8 +12,8 @@ function Square(props) {
 
 class Board extends React.Component {
   renderSquare(i) {
-    return ( 
-      <Square 
+    return (
+      <Square
         val={this.props.squares[i]}
         onClick={() => this.props.onClick(i)}
       />
@@ -47,9 +47,11 @@ class TicTacToe extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      history: [{
-        squares: Array(9).fill(null),
-      }],
+      history: [
+        {
+          squares: Array(9).fill(null),
+        },
+      ],
       stepNumber: 0,
       xIsNext: true,
     };
@@ -62,11 +64,13 @@ class TicTacToe extends React.Component {
     if (calculateWinner(squares) || squares[i]) {
       return;
     }
-    squares[i] = this.state.xIsNext ? 'X' : 'O';
+    squares[i] = this.state.xIsNext ? "X" : "O";
     this.setState({
-      history: history.concat([{
-        squares: squares,
-      }]),
+      history: history.concat([
+        {
+          squares: squares,
+        },
+      ]),
       stepNumber: history.length,
       xIsNext: !this.state.xIsNext,
     });
@@ -75,7 +79,7 @@ class TicTacToe extends React.Component {
   jumpTo(step) {
     this.setState({
       stepNumber: step,
-      xIsNext: (step % 2) === 0,
+      xIsNext: step % 2 === 0,
     });
   }
 
@@ -85,9 +89,7 @@ class TicTacToe extends React.Component {
     const winner = calculateWinner(current.squares);
 
     const moves = history.map((step, move) => {
-      const desc = move ?
-        'Go to move #' + move :
-        'To start';
+      const desc = move ? "Go to move #" + move : "To start";
       return (
         <li key={move}>
           <button onClick={() => this.jumpTo(move)}>{desc}</button>
@@ -97,15 +99,15 @@ class TicTacToe extends React.Component {
 
     let status;
     if (winner) {
-      status = 'The winner is ' + winner
+      status = "The winner is " + winner;
     } else {
-      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+      status = "Next player: " + (this.state.xIsNext ? "X" : "O");
     }
 
     return (
       <div className="game">
         <div className="game-board">
-          <Board 
+          <Board
             squares={current.squares}
             onClick={(i) => this.handleClick(i)}
           />
