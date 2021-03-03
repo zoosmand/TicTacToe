@@ -72,7 +72,7 @@ Staging:
       - master
       - $STAGE_PTRN
 
-Deploy release:^release-[0-9\.]+
+Deploy release:
   stage: release
   tags:
     - task-03-docker
