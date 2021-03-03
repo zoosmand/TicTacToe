@@ -8,7 +8,8 @@ stages:
 image: node:latest
 
 variables:
-  LINTER_PTRN: ^(tictactoe)(_)?([0-9]{2})?[\.js]+
+  LINTER_PTRN: ^(tictactoe)(_)?([0-9]{2})?[\.js|\.jsx]+
+  TEST_PTRN: ^[a-z]*(\.test)[\.js|\.jsx]+
   STAGE_PTRN: /^stage-[0-9]{3}/i
   RELEASE_PTRN: /^release-[0-9\.]+/i
 
@@ -57,7 +58,7 @@ Unit test 1:
     CI: "true"
   script:
     - export
-    - yarn test `for line in \`ls ./src | grep -iE $LINTER_PTRN\`; do echo \`pwd\`/src/$line; done`
+    - yarn test `for line in \`ls ./src | grep -iE $TEST_PTRN\`; do echo \`pwd\`/src/$line; done`
 
 Unit test 2:
   stage: test
