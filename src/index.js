@@ -1,15 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
 // import App from './App';
-import TicTacToe from './TicTacToe';
+import TicTacToe from "./TicTacToe";
 // import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
     <TicTacToe />
   </React.StrictMode>,
-  document.getElementById('gameRoot')
+  document.getElementById("gameRoot")
 );
 
 // If you want to start measuring performance in your app, pass a function

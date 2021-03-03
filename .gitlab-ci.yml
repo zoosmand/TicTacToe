@@ -12,7 +12,6 @@ variables:
   STAGE_PTRN: /^stage-[0-9]{3}/i
   RELEASE_PTRN: /^release-[0-9\.]+/i
 
-
 Install dependencies:
   stage: build
   tags:
@@ -22,6 +21,7 @@ Install dependencies:
     - yarn add eslint --dev
     - yarn add eslint-plugin-react --dev
     - yarn add prettier --dev
+    - yarn add husky --dev
   artifacts:
     paths:
       - node_modules
