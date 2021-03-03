@@ -48,7 +48,7 @@ Prettier test:
   script:
     - yarn run prettier -c `for line in \`ls ./src | grep -iE $LINTER_PTRN\`; do echo \`pwd\`/src/$line; done`
 
-Unit test:
+Unit test 1:
   stage: test
   tags:
     - task-03-docker
@@ -57,7 +57,18 @@ Unit test:
     CI: "true"
   script:
     - export
-    - yarn test
+    - yarn test `for line in \`ls ./src | grep -iE $LINTER_PTRN\`; do echo \`pwd\`/src/$line; done`
+
+Unit test 2:
+  stage: test
+  tags:
+    - task-03-docker
+  when: on_success
+  variables:
+    CI: "true"
+  script:
+    - export
+    - yarn test ./src/App.test.js
 
 Staging:
   stage: stage
