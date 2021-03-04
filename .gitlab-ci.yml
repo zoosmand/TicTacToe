@@ -1,7 +1,6 @@
 stages:
   - build
   - test
-  - image
   - stage
   - release
   - prod
@@ -79,24 +78,7 @@ Common unit test:
   script:
     - yarn test `for line in \`ls ./src | grep -iE $TEST_PTRN\`; do echo \`pwd\`/src/$line; done`
 
-Build deploying image:
-  stage: image
-  tags:
-    - task-03-docker
-  when: on_success
-  image: docker:stable
-  services:
-    - docker:dind
-  script:
-    - docker build -t $IMAGE_NAME .
-    - docker image prune -f
-  only:
-    refs:
-      - tags
-      - master
-      - $STAGE_PTRN
-
-Staging:
+Deploy on stage:
   stage: stage
   tags:
     - task-03-docker
@@ -105,7 +87,9 @@ Staging:
   services:
     - docker:dind
   script:
-    - docker run --rm -v ~/.ssh:/root/.ssh --name $CONTAINER_NAME $IMAGE_NAME
+    - docker build -t $IMAGE_NAME .
+    - docker run --rm --name $CONTAINER_NAME $IMAGE_NAME
+    - docker image prune -f
     - dicker volume prune -f
   only:
     refs:
