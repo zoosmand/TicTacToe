@@ -48,5 +48,6 @@
     "hooks": {
       "pre-commit": "yarn run lint:fix && yarn run format"
     }
-  }
+  },
+  "homepage": "."
 }
