@@ -18,7 +18,7 @@ fi
 cd ./$APP
 
 if [[ "Already up to date." != `git pull` ]] || [[ "$FIRST_INSTALL" == "true" ]]; then
-    echo "Prepate to update."
+    echo "Prepare update."
     git pull
     yarn install
     CI=true yarn test
