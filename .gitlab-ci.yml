@@ -1,6 +1,7 @@
 stages:
   - build
   - test
+  - image
   - stage
   - release
   - prod
@@ -13,6 +14,10 @@ variables:
   TEST_PTRN: ^[a-z]*(\.test)[\.js|\.jsx]+
   STAGE_PTRN: /^stage-[0-9]{3}/i
   RELEASE_PTRN: /^release-[0-9\.]+/i
+  IMAGE_NAME: "deployer:latest"
+  CONTAINER_NAME: "deploy-001"
+  OWNER: "zoosmand"
+
 
 Install dependencies:
   stage: build
@@ -74,13 +79,31 @@ Common unit test:
   script:
     - yarn test `for line in \`ls ./src | grep -iE $TEST_PTRN\`; do echo \`pwd\`/src/$line; done`
 
+Build deploying image:
+  stage: image
+  tags:
+    - task-03-docker
+  when: on_success
+  image: docker:stable
+  services:
+    - docker:dind
+  script:
+    - docker build -t $IMAGE_NAME .
+    - docker image prune -f
+  only:
+    refs:
+      - tags
+      - master
+      - $STAGE_PTRN
+
 Staging:
   stage: stage
   tags:
     - task-03-docker
   when: on_success
   script:
-    - echo "running staging.sh"
+    - docker run --rm -v ~/.ssh:/root/.ssh --name $CONTAINER_NAME $IMAGE_NAME
+    - dicker volume prune -f
   only:
     refs:
       - tags

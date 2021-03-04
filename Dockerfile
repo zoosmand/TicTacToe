@@ -1,20 +1,28 @@
-FROM node:latest
+FROM ubuntu
 
-EXPOSE 3030
+ARG DEPLOYER_NAME=Deployer
+ARG DEPLOYER_VER=0.0.1
 
-ENV APP=test-react-app
-ENV APP_DIR=/opt/$APP
+EXPOSE 0
 
-ENV CI=true
+LABEL name=${DEPLOYER_NAME}
+LABEL version=${DEPLOYER_VER}
 
-RUN echo "Asia/Yekaterinburg" > timezone
-RUN cp /usr/share/zoneinfo/Asia/Yekaterinburg /etc/localtime
+COPY ./deploy*.sh /
+RUN chmod 700 deploy*.sh
+RUN tar czvf depl.tgz deploy_host*.sh 
+RUN rm deploy_host*.sh
 
-WORKDIR /opt
-RUN git clone https://gitlab.com/zoosmand/${APP}.git
-WORKDIR  $APP_DIR
-RUN yarn install
-RUN yarn test
+# RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AA8E81B4331F7F50
+    # gnupg2 \
+    # gnupg1 \
+    # apt-utils \
+    # iproute2 \
 
-ENV PATH=${APP_DIR}/:${PATH}
-ENTRYPOINT [ "yarn", "start"]
+RUN apt-get update && apt-get install -y \
+    ssh-tools \
+    curl \
+    \
+    && apt-get clean
+
+CMD [ "bash", "deploy_stage.sh" ]
