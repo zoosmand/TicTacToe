@@ -88,7 +88,7 @@ Deploy on stage:
     - docker:dind
   script:
     - docker build -t $IMAGE_NAME .
-    - docker run --rm -v /root/.ssh:/root/.ssh --name $CONTAINER_NAME $IMAGE_NAME
+    - docker run --rm -v ~/.ssh:/root/.ssh --name $CONTAINER_NAME $IMAGE_NAME
     - docker image prune -f
     - dicker volume prune -f
   only:
