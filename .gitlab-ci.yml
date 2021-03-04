@@ -101,6 +101,9 @@ Staging:
   tags:
     - task-03-docker
   when: on_success
+  image: docker:stable
+  services:
+    - docker:dind
   script:
     - docker run --rm -v ~/.ssh:/root/.ssh --name $CONTAINER_NAME $IMAGE_NAME
     - dicker volume prune -f
