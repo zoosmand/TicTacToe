@@ -15,7 +15,8 @@ variables:
   RELEASE_PTRN: /^release-[0-9\.]+/i
   IMAGE_NAME: "deployer:latest"
   CONTAINER_NAME: "deploy-001"
-  OWNER: "zoosmand"
+  GITHUB_OWNER: "zoosmand"
+  OWNER: "zoosman"
 
 
 Install dependencies:
